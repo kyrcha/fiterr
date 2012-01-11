@@ -1,0 +1,104 @@
+# ESN parameters
+
+# These parameters must be set
+# Input units
+nInputUnits = 2
+
+# Internal or reservoir units
+nInternalUnits = 400
+
+# Output units
+nOutputUnits = 1
+
+# Connectivity percentage
+D = 0.1
+
+####################
+# Optional Arguments
+####################
+
+### Shifts and Scalings
+
+# inputScaling: a nInputUnits x 1 vector if the scalings are different between outputs, otherwise put a default value in the first one
+inputScaling.1 = 0.8
+inputScaling.2 = 0.5
+
+# inputShift: a nInputUnits x 1 vector if the scalings are different between outputs, otherwise put a default value in the first one
+inputShift.1 = -0.8
+inputShift.2 = 0.0
+
+# teacherScaling: a nOutputUnits x 1 vector if the scalings are different between outputs, otherwise put a default value in the first one
+teacherScaling.1 = 0.8
+
+# teacherShift: a nOutputUnits x 1 vector
+teacherShift.1 = -0.8
+
+#feedbackScaling': a nOutputUnits x 1 vector, indicating the scaling if the scalings are different between outputs, otherwise put a default value in the first one
+#factor to be applied on the output before it is fed back into the network
+feedbackScaling.1 = 0.0
+
+### Learning modes
+
+# learningMode: a string ('offline_singleTimeSeries', 'offline_multipleTimeSeries' or 'online')
+# 1. Case 'offline_singleTimeSeries': trainInput and trainOutput each represent a 
+#    single time series in an array of size sequenceLength x sequenceDimension
+# 2. Case 'offline_multipleTimeSeries': trainInput and trainOutput each represent a 
+#    collection of K time series, given in cell arrays of size K x 1, where each cell is an
+#    array of size individualSequenceLength x sequenceDimension
+# 3. Case 'online': trainInput and trainOutput are a single time
+#    series, output weights are adapted online
+learningMode = OFFLINE
+#learningMode = offline_multipleTimeSeries
+#learningMode = online
+
+### Activation functions
+
+# reservoirActivationFunction: a string ("tanh", "identity", "sigmoid01")
+reservoirActivationFunction = TANH
+#reservoirActivationFunction = identity
+#reservoirActivationFunction = sigmoid
+
+# outputActivationFunction: a string("tanh", "identity", "sigmoid01")
+outputActivationFunction = TANH
+#outputActivationFunction = identity
+#outputActivationFunction = sigmoid
+
+# inverseOutputActivationFunction: the inverse to outputActivationFunction, 
+# one of 'atanh', 'identity', 'sigmoid01_inv'.
+# When choosing the activation function, make sure the inverse
+# activation function is corectly set.
+
+### Other params
+
+# methodWeightCompute: a string ('pseudoinverse', 'wiener_hopf'). It  
+# specifies which method to use to compute the output weights given the
+# state collection matrix and the teacher
+methodWeightCompute = PSEUDOINVERSE
+#methodWeightCompute = wiener_hopf
+
+# noiseLeve: a small number containing the amount 
+# of uniform noise to be added when computing the internal states
+noiseLevel = 0.0000000001
+
+# spectralRadius: a positive number less than 1.
+spectralRadius = 0.85
+
+# type: a string ('plain_esn', 'leaky_esn' or 'twi_esn')
+type = PLAIN
+#type = leaky_esn
+#type = twi_esn
+
+# timeConstants: option used in networks with type == "leaky_esn", "leaky1_esn" and "twi_esn".
+# Is given as column vector of size nInternalUnits, where each entry 
+# signifies a time constant for a reservoir neuron.
+timeConstants.1 = 1
+timeConstants.2 = 1
+
+# leakage: option used in networks with type == "leaky_esn" or "twi_esn"
+leakage = 0.5
+
+# RLS_lambda: option used in online training(learningMode == "online")
+RLS_lambda = 0.9999995
+ 
+# RLS_delta: option used in online training(learningMode == "online")
+RLS_delta = 0.000001

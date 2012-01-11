@@ -1,0 +1,12 @@
+1
+2;4; states
+3;5; actions
+0;0; x=>x
+0;1; x=>y
+1;2; ux=>ux
+1;3; ux=>uy
+-
+0;1; left => west
+1;0; neutral=>neutral
+2;2; right => east
+-

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="neat" default="all" basedir=".">
+	<!-- Project-wide settings. All directories are relative to the -->
+	<!-- project root directory -->
+	<!-- Project directories -->
+	<property name="src.dir" value="src"/>
+	<property name="doc.dir" value="doc"/>
+	<property name="dist.dir" value="dist"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="bin.dir" value="bin"/>
+
+	<!-- Global settings -->
+	<property name="javac.debug" value="on"/>
+
+	<!-- Global "magic" property for <javac> -->
+	<!--<property name="build.compiler" value="modern"/>-->
+	<property name="build.compiler" value="javac1.5"/>
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+ 	 	</fileset>
+	</path>
+
+	<!-- Build the application -->
+	<target name="build" depends="cleanall">
+		<mkdir dir="${bin.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+ 	   	<!-- Compile the application classes -->
+    	<javac destdir="${bin.dir}" debug="${debug.flag}" deprecation="on">
+	        <!-- We could have used javac's srcdir attribute -->
+      		<src path="${src.dir}"/>
+		    <classpath refid="classpath"/>
+		</javac>
+    	<!-- Package the application into a JAR -->
+    	<jar jarfile="${dist.dir}/fiterr.jar" basedir="${bin.dir}" />
+	</target>
+
+	<!-- Generate the API documentation-->
+	<target name="javadoc" depends="build">
+		<mkdir dir="${doc.dir}/api"/>
+ 	 	<javadoc sourcepath="${src.dir}"
+	          	destdir="${doc.dir}/api"
+        	   	author="true"
+        	   	version="true"
+        	   	use="true" >
+			<classpath refid="classpath"/>
+  		</javadoc>
+	</target>
+	
+	<target name="clean">
+		<delete>
+			<fileset dir="${bin.dir}" includes="**/*.class"/>
+		</delete>
+	</target>
+	<!-- Delete any created directories and their contents -->
+	<target name="cleanall" depends="clean">
+		<delete dir="${bin.dir}"/>
+		<delete dir="${dist.dir}"/>
+		<delete dir="${doc.dir}/api"/>
+	</target>
+
+	<target name="all" depends="build"/>
+
+</project>
+
+
+

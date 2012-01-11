@@ -1,0 +1,6 @@
+# Mountain Car problem parameters
+randomStartStates = false
+transitionNoise = 0.0
+randomSeed = 0
+nonMarkovian = false
+accFactor = 0.001

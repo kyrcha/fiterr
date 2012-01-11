@@ -1,0 +1,53 @@
+# NEAT parameters template
+
+populationSize = 150
+
+nInputUnits = 3
+nOutputUnits = 1
+
+weight-mut-power = 2.5 
+recur-prop = 0.0 
+
+# Coefficients
+disjoint-coeff.c1 = 1.0
+excess-coeff.c2 =  1.0 
+mutdiff-coeff.c3 = 0.4
+compat-threshold = 3.0
+
+age-significance = 1.0
+ 
+survival-thresh = 0.2
+ 
+mutate-only-prob = 0.25
+
+mutate-link-weights-prob = 0.9 
+
+mutate-add-node-prob.mn = 0.03 
+
+mutate-add-link-prob.ml = 0.05
+
+interspecies-mate-rate = 0.001
+ 
+mate-multipoint-prob = 0.6
+
+mate-multipoint-avg-prob = 0.4
+
+mate-singlepoint-prob = 0.0
+ 
+mate-only-prob = 0.2 
+
+recur-only-prob = 0.0
+
+pop-size = 100 
+
+dropoff-age = 100 
+ 
+newlink-tries = 50
+
+babies-stolen = 0
+ 
+num-compat-mod = 0.3
+ 
+num-species-target = 100
+
+use-compat-mod = false

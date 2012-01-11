@@ -1,0 +1,74 @@
+population = 100
+
+init-int-nodes = 1
+
+number-inputs = 2
+
+number-outputs = 1
+
+reservoir-activation-function = tanh
+
+output-activation-function = tanh
+#output-activation-function = identity
+
+inputScaling.1 = 0.01
+
+inputScaling.2 = 0.01
+
+inputShift.1 = 0.0
+
+inputShift.2 = 0.0
+
+teacherScaling.1 = 0.01
+
+teacherShift.1 = 0.0
+
+use-compat-mode = false
+
+num-compat-mod = 0.3
+
+num-species-target = 6
+
+c1 = 1.0
+
+c2 = 1.0
+
+c3 = 0.5
+
+compat-threshold = 1.5
+
+maximum-stagnation = 5
+
+survival-thresh = 0.3
+
+interspecies-mate-rate = 0.001
+
+noiseLevel = 0.000001
+
+RLS_lambda = 0.9999995
+ 
+RLS_delta = 0.000001
+
+mutate-SR = 0.1
+
+mutate-sparse = 0.1
+
+mutate-only-prob = 0.33
+
+mate-only-prob = 0.33
+
+mutate-link-weights-prob = 0.9
+
+mutate-add-node-prob.mn = 0.5
+
+mutate-add-link-prob.ml = 0.75
+
+weight-mut-power = 0.5
+
+#methodWeightCompute = pseudoinverse
+methodWeightCompute = wiener_hopf
+
+learningMode = offline
+#learningMode = online
+
+complexification = true

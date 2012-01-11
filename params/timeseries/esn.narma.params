@@ -1,0 +1,85 @@
+# ESN parameters
+
+# These parameters must be set
+# Number of input units
+nInputUnits = 2
+# Number of reservoir units
+nInternalUnits = 1000
+# Number of output units
+nOutputUnits = 1
+# Connectivity
+D = 0.1
+
+####################
+# Optional Arguments
+####################
+
+### Shifts and Scalings
+
+# inputScaling: a nInputUnits x 1 vector
+inputScaling.1 = 0.1
+inputScaling.2 = 0.1
+
+# inputShift: a nInputUnits x 1 vector
+inputShift.1 = 0
+inputShift.2 = 0
+
+# teacherScaling: a nOutputUnits x 1 vector
+teacherScaling.1 = 0.3 
+
+# teacherShift: a nOutputUnits x 1 vector
+teacherShift.1 = -0.2
+
+#feedbackScaling': a nOutputUnits x 1 vector, indicating the scaling
+#factor to be applied on the output before it is fed back into the network
+feedbackScaling.1 = 0
+
+### Learning modes
+
+# learningMode: a string ('offline_singleTimeSeries', 'offline_multipleTimeSeries' or 'online')
+# 1. Case 'offline_singleTimeSeries': trainInput and trainOutput each represent a 
+#    single time series in an array of size sequenceLength x sequenceDimension
+# 2. Case 'offline_multipleTimeSeries': trainInput and trainOutput each represent a 
+#    collection of K time series, given in cell arrays of size K x 1, where each cell is an
+#    array of size individualSequenceLength x sequenceDimension
+# 3. Case 'online': trainInput and trainOutput are a single time
+#    series, output weights are adapted online
+learningMode = offline_singleTimeSeries
+#learningMode = offline_multipleTimeSeries
+#learningMode = online
+
+# RLS_lambda: option used in online training(learningMode == "online")
+RLS_lambda = 0.9999995
+ 
+# RLS_delta: option used in online training(learningMode == "online")
+RLS_delta = 0.000001
+
+### Activation functions
+
+# reservoirActivationFunction: a string ("tanh", "identity", "sigmoid01")
+reservoirActivationFunction = tanh
+#reservoirActivationFunction = identity
+#reservoirActivationFunction = sigmoid
+
+# outputActivationFunction: a string("tanh", "identity", "sigmoid01")
+outputActivationFunction = tanh
+#outputActivationFunction = identity
+#outputActivationFunction = sigmoid
+
+### Other params
+
+# methodWeightCompute: a string ('pseudoinverse', 'wiener_hopf'). It  
+# specifies which method to use to compute the output weights given the
+# state collection matrix and the teacher
+methodWeightCompute = pseudoinverse
+#methodWeightCompute = wiener_hopf
+
+# noiseLeve: a small number containing the amount 
+# of uniform noise to be added when computing the internal states
+noiseLevel = 0.0
+
+# spectralRadius: a positive number less than 1.
+spectralRadius = 0.5 
+
+# type: a string ('plain_esn', 'leaky_esn' or 'twi_esn')
+type = plain_esn

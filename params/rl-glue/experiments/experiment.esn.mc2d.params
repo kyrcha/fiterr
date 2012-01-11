@@ -1,0 +1,33 @@
+##############################
+# Experiment parameters set up 
+##############################
+
+# experiment
+# the class describing the experiment
+experiment = info.kyrcha.fiterr.rlglue.experiments.NEARExperiment
+# The number of runs the experiment will run
+experiment.runs = 30
+# The number of generations
+experiment.generations = 1
+# The number of episodes per individual
+experiment.episodes = 1000
+# The number of steps per episode
+experiment.steps = 2500
+# Experiment population parametarization
+experiment.algorithm = info.kyrcha.fiterr.ne.esn.near.NEAR
+experiment.pop.params = ../params/rl-glue/algorithms/NEAR/near-esn.mc2d.params
+experiment.learning = true
+
+# agent type 
+# the class defining the NEAT Agent
+agent = info.kyrcha.fiterr.rlglue.agents.NEAgent
+agent.params = ../params/rl-glue/agents/agent.params
+
+# environment
+# The class defining the environment
+environment = info.kyrcha.fiterr.rlglue.environments.mountaincar.MountainCar2D
+# The parameter file that parameterizes the environment
+environment.params = ../params/rl-glue/environments/MountainCar/mc2d.rand.params
+
+# logger
+log = ../params/log.conf

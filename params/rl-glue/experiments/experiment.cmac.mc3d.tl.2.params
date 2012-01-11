@@ -1,0 +1,27 @@
+##############################
+# Experiment parameters set up 
+##############################
+
+# experiment
+# the class describing the experiment
+experiment = info.kyrcha.fiterr.rlglue.experiments.CMACExperiment
+# The number of episodes per individual
+experiment.episodes = 400
+# The number of steps per episode
+experiment.steps = 5000
+
+# agent type 
+# the class defining the NEAT Agent
+#agent = info.kyrcha.fiterr.rlglue.agents.CMACAgent
+agent = info.kyrcha.fiterr.rlglue.agents.FourStatesCMACAgent
+agent.params = ../params/rl-glue/agents/cmac.mc3d.tl.2.params
+
+# environment
+# The class defining the environment
+environment = info.kyrcha.fiterr.rlglue.environments.mountaincar.MountainCar3D
+# The parameter file that parameterizes the environment
+environment.params = ../params/rl-glue/environments/MountainCar/mc3d.valley.params
+
+# logger
+log = ../params/log.conf
+

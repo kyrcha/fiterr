@@ -1,0 +1,7 @@
+leftCartBound = -2.4
+rightCartBound = 2.4
+leftAngleBound = 36
+rightAngleBound = 36
+randomStarts = false
+rk4 = true
+nonMarkovian = true

@@ -1,0 +1,51 @@
+# NEAT parameters for DPB
+weight-mut-power = 1.8
+recur-prop = 0.2 
+
+populationSize = 150
+#populationSize = 200
+
+nInputUnits = 3
+nOutputUnits = 2
+
+# Coefficients
+disjoint-coeff.c1 = 1.0
+excess-coeff.c2 =  1.0 
+mutdiff-coeff.c3 = 3.0
+compat-threshold = 4.0
+
+age-significance = 1.0
+ 
+survival-thresh = 0.4
+ 
+mutate-only-prob = 0.25
+
+mutate-link-weights-prob = 0.9 
+
+mutate-add-node-prob.mn = 0.001
+
+mutate-add-link-prob.ml = 0.03
+
+interspecies-mate-rate = 0.001
+ 
+mate-multipoint-prob = 0.6
+
+mate-multipoint-avg-prob = 0.4
+
+mate-singlepoint-prob = 0.0
+ 
+mate-only-prob = 0.2 
+
+recur-only-prob = 0.0
+
+dropoff-age = 100 
+ 
+newlink-tries = 50
+
+babies-stolen = 0
+ 
+num-compat-mod = 0.3
+ 
+num-species-target = 15
+
+use-compat-mod = false

@@ -1,0 +1,30 @@
+# samples header
+file.write = true
+file.towrite = ../output/samplesOut.txt
+file.read = false
+
+# centers offset
+offset = 0.1
+
+# epsilon greedy policy
+epsilon = 0
+
+# learning rate alpha
+alpha.factor = 0.05
+alpha.nom = 0.1
+
+# lambda
+lambda = 0.95
+
+# gamma
+gamma = 1.0
+
+# number of tilings
+tilings = 2
+
+# tiles per dimension
+tiles-per-dimension = 14
+
+# initial tile values
+values.random = false
+

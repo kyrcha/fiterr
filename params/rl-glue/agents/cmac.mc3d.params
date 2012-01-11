@@ -1,0 +1,32 @@
+# samples header
+file.write = false
+file.towrite = ../output/samplesOut.txt
+file.read = false
+file.toread = ../output/samplesIn.txt
+file.mapping = ../mappings/mc2d2mc3d.txt
+
+# centers offset
+offset = 0.1
+
+# epsilon greedy policy
+epsilon = 0.1
+
+# learning rate alpha
+alpha.factor = 0.2
+alpha.nom = 1
+
+# lambda
+lambda = 0.95
+
+# gamma
+gamma = 1.0
+
+# number of tilings
+tilings = 1
+
+# tiles per dimension
+tiles-per-dimension = 14
+
+# initial tile values
+values.random = false
+
