@@ -413,7 +413,8 @@ public class NEARGenome extends MetaNEATGenome {
 		nInternalUnits = near.initIntNodes;
 		rho = NEAR.RHO_LB + Utils.rand.nextDouble() * (NEAR.RHO_UB - NEAR.RHO_LB);
 		D = NEAR.D_LB + Utils.rand.nextDouble() * (NEAR.D_UB - NEAR.D_LB);
-		wBack = new double[nInternalUnits][nOutputUnits];
+//		wBack = new double[nInternalUnits][nOutputUnits];
+		wBack = Utils.randomMatrixPlusMinus(nInternalUnits, nOutputUnits, RAND_INP);
 //		wOut = new double[nOutputUnits][nInputUnits + nInternalUnits];
 		wOut = Utils.randomMatrixPlusMinus(nOutputUnits, nInputUnits + nInternalUnits, RAND_OUT);
 		// Initialize input matrix between -RAND_INP and RAND_INP
@@ -533,6 +534,7 @@ public class NEARGenome extends MetaNEATGenome {
 		double[][] xoverW;
 		double[][] xoverWIn;
 		double[][] xoverWOut;
+		double[][] xoverWBack;
 		boolean[][] xoverWBool;
 		
 		// Complexify the offspring => choose the largest reservoir
@@ -540,6 +542,7 @@ public class NEARGenome extends MetaNEATGenome {
 			xoverW = Utils.cloneMatrix(parent1.w);
 			xoverWIn = Utils.cloneMatrix(parent1.wIn);
 			xoverWOut = Utils.cloneMatrix(parent1.wOut);
+			xoverWBack = Utils.cloneMatrix(parent1.wBack);
 			xoverWBool = Utils.cloneMatrix(parent1.wBool);
 			offspring.nInputUnits = parent1.nInputUnits;
 			offspring.nOutputUnits = parent1.nOutputUnits;
@@ -547,6 +550,7 @@ public class NEARGenome extends MetaNEATGenome {
 			xoverW = Utils.cloneMatrix(parent2.w);
 			xoverWIn = Utils.cloneMatrix(parent2.wIn);
 			xoverWOut = Utils.cloneMatrix(parent2.wOut);
+			xoverWBack = Utils.cloneMatrix(parent2.wBack);
 			xoverWBool = Utils.cloneMatrix(parent2.wBool);
 			offspring.nInputUnits = parent2.nInputUnits;
 			offspring.nOutputUnits = parent2.nOutputUnits;
@@ -630,7 +634,23 @@ public class NEARGenome extends MetaNEATGenome {
 			}
 		}
 		offspring.setWOut(xoverWOut);
-		offspring.setWBack(new double[nIntUnits][offspring.nOutputUnits]);
+
+		// Xover the feedback
+		for(int i = 0; i < minInternalUnits; i++) {
+			for(int j = 0; j < offspring.nOutputUnits; j++) {
+				if(Utils.rand.nextDouble() < 0.5) {
+					xoverWBack[i][j] = (parent1.wBack[i][j] + parent2.wBack[i][j]) / 2.0;
+				} else {
+					if(Utils.rand.nextDouble() < 0.5) {
+						xoverWBack[i][j] = parent1.wBack[i][j];
+					} else {
+						xoverWBack[i][j] = parent2.wBack[i][j];
+					}
+				}
+			}
+		}
+		offspring.setWBack(xoverWBack);
+		
 		return offspring;
 	}
 	
@@ -662,6 +682,7 @@ public class NEARGenome extends MetaNEATGenome {
 		double[][] xoverW;
 		double[][] xoverWIn;
 		double[][] xoverWOut;
+		double[][] xoverWBack;
 		boolean[][] xoverWBool;
 		
 		// Choose the fittest reservoir
@@ -669,11 +690,13 @@ public class NEARGenome extends MetaNEATGenome {
 			xoverW = Utils.cloneMatrix(parent1.w);
 			xoverWIn = Utils.cloneMatrix(parent1.wIn);
 			xoverWOut = Utils.cloneMatrix(parent1.wOut);
+			xoverWBack = Utils.cloneMatrix(parent1.wBack);
 			xoverWBool = Utils.cloneMatrix(parent1.wBool);
 		} else {
 			xoverW = Utils.cloneMatrix(parent2.w);
 			xoverWIn = Utils.cloneMatrix(parent2.wIn);
 			xoverWOut = Utils.cloneMatrix(parent2.wOut);
+			xoverWBack = Utils.cloneMatrix(parent2.wBack);
 			xoverWBool = Utils.cloneMatrix(parent2.wBool);
 		}
 		
@@ -758,7 +781,22 @@ public class NEARGenome extends MetaNEATGenome {
 			}
 		}
 		offspring.setWOut(xoverWOut);
-		offspring.setWBack(new double[fitterUnits][offspring.nOutputUnits]);
+		
+		// Xover the feedback
+		for(int i = 0; i < minInternalUnits; i++) {
+			for(int j = 0; j < offspring.nOutputUnits; j++) {
+				if(Utils.rand.nextDouble() < 0.5) {
+					xoverWBack[i][j] = (parent1.wBack[i][j] + parent2.wBack[i][j]) / 2.0;
+				} else {
+					if(Utils.rand.nextDouble() < 0.5) {
+						xoverWBack[i][j] = parent1.wBack[i][j];
+					} else {
+						xoverWBack[i][j] = parent2.wBack[i][j];
+					}
+				}
+			}
+		}
+		offspring.setWBack(xoverWBack);
 		return offspring;
 	}
 	
@@ -791,6 +829,14 @@ public class NEARGenome extends MetaNEATGenome {
 			}
 		}
 		wIn = wInNew;
+		// Continue with feedback units
+		double[][] wBackNew = Utils.randomMatrixPlusMinus(nInternalUnits, nOutputUnits, RAND_INP);
+		for(int i = 0; i < wBack.length; i++) {
+			for(int j = 0; j < wBack[i].length; j++) {
+				wBackNew[i][j] = wBack[i][j];
+			}
+		}
+		wBack = wBackNew;
 		// Continue with output units
 		double[][] wOutNew = new double[nOutputUnits][nInputUnits + nInternalUnits];
 		for(int i = 0; i < wOut.length; i++) {
@@ -896,6 +942,22 @@ public class NEARGenome extends MetaNEATGenome {
 				// Some time restart it
 				if(Utils.rand.nextDouble() > 0.5) {
 					wIn[i][j] = (2.0 * Utils.rand.nextDouble() - 1.0) * RAND_INP;
+				}
+			}
+		}
+		
+		// Feedback Weights
+		for(int i = 0; i < wBack.length;i ++) {
+			for(int j = 0; j < wBack[i].length; j++) {
+				// Mutate weight by some perturbation
+				if(Utils.rand.nextDouble() < near.mutateLinkWeights) {
+					double oldVal = wBack[i][j];
+					double pertubation = Utils.pertubation(near.weightMutationPower);  
+					wBack[i][j] = perturbation(oldVal, pertubation, MAX_WEIGHT);
+				}
+				// Some time restart it
+				if(Utils.rand.nextDouble() > 0.5) {
+					wBack[i][j] = (2.0 * Utils.rand.nextDouble() - 1.0) * RAND_INP;
 				}
 			}
 		}
